@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>موقع المبرمج محمود العالمي 🚀</title>
+    <style>
+        body { background-color: #0f172a; color: white; font-family: 'Segoe UI', sans-serif; text-align: center; padding: 20px; transition: 0.5s; }
+        .header { margin-bottom: 40px; border-bottom: 2px solid #38bdf8; display: inline-block; padding-bottom: 10px; }
+        .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .app-card { background-color: #1e293b; border-radius: 12px; padding: 20px; width: 280px; border: 1px solid #334155; transition: 0.3s; }
+        .app-card:hover { transform: translateY(-10px); border-color: #38bdf8; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .clock-text { color: #38bdf8; font-size: 35px; font-weight: bold; margin: 15px 0; }
+        .calc-screen { background: #0f172a; padding: 10px; border-radius: 5px; margin-bottom: 10px; font-size: 20px; min-height: 30px; text-align: left; direction: ltr; color: #38bdf8; }
+        .btn { background-color: #38bdf8; color: #0f172a; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
+        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-top: 10px; }
+        .calc-btn { background: #334155; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        input { width: 80%; padding: 10px; border-radius: 5px; border: none; margin-bottom: 10px; text-align: center; color: #0f172a; outline: none; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1 onclick="changeColor()" style="cursor: pointer;">01113832312 موقع محمود</h1>
+        <p>اضغط على اسمي لتغيير لون الموقع</p>
+    </div>
+
+    <div class="container">
+        <div class="app-card">
+            <h3>تطبيق الساعة</h3>
+            <div id="clock" class="clock-text">00:00:00</div>
+            <button class="btn">ساعة حقيقية ✅</button>
+        </div>
+
+        <div class="app-card">
+            <h3>الآلة الحاسبة</h3>
+            <div id="display" class="calc-screen">0</div>
+            <div class="calc-grid">
+                <button class="calc-btn" onclick="addToCalc('7')">7</button>
+                <button class="calc-btn" onclick="addToCalc('8')">8</button>
+                <button class="calc-btn" onclick="addToCalc('9')">9</button>
+                <button class="calc-btn" onclick="addToCalc('/')">/</button>
+                <button class="calc-btn" onclick="addToCalc('4')">4</button>
+                <button class="calc-btn" onclick="addToCalc('5')">5</button>
+                <button class="calc-btn" onclick="addToCalc('6')">6</button>
+                <button class="calc-btn" onclick="addToCalc('*')">*</button>
+                <button class="calc-btn" onclick="addToCalc('1')">1</button>
+                <button class="calc-btn" onclick="addToCalc('2')">2</button>
+                <button class="calc-btn" onclick="addToCalc('3')">3</button>
+                <button class="calc-btn" onclick="addToCalc('-')">-</button>
+                <button class="calc-btn" onclick="clearCalc()" style="background: #ef4444;">C</button>
+                <button class="calc-btn" onclick="addToCalc('0')">0</button>
+                <button class="calc-btn" onclick="calculate()" style="background: #10b981;">=</button>
+                <button class="calc-btn" onclick="addToCalc('+')">+</button>
+            </div>
+        </div>
+
+        <div class="app-card">
+            <h3>لعبة تخمين الأرقام</h3>
+            <p id="game-msg" style="margin: 10px 0; color: #94a3b8;">خمن رقم من 1 لـ 10</p>
+            <input type="number" id="user-guess" placeholder="اكتب رقمك">
+            <button class="btn" onclick="checkGuess()">تخمين!</button>
+        </div>
+    </div>
+
+    <script>
+        // كود الساعة
+        function updateClock() {
+            const now = new Date();
+            let h = String(now.getHours()).padStart(2, '0');
+            let m = String(now.getMinutes()).padStart(2, '0');
+            let s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock').textContent = h + ":" + m + ":" + s;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // كود الآلة الحاسبة
+        let calcValue = "";
+        function addToCalc(val) {
+            calcValue += val;
+            document.getElementById('display').textContent = calcValue;
+        }
+        function clearCalc() {
+            calcValue = "";
+            document.getElementById('display').textContent = "0";
+        }
+        function calculate() {
+            try {
+                calcValue = eval(calcValue).toString();
+                document.getElementById('display').textContent = calcValue;
+            } catch {
+                document.getElementById('display').textContent = "Error";
+                calcValue = "";
+            }
+        }
+
+        // كود تغيير الألوان عند الضغط على الاسم
+        function changeColor() {
+            const colors = ['#0f172a', '#1e1b4b', '#064e3b', '#450a0a', '#1e293b'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.style.backgroundColor = randomColor;
+        }
+
+        // كود لعبة التخمين
+        let secretNumber = Math.floor(Math.random() * 10) + 1;
+        function checkGuess() {
+            const userGuess = document.getElementById('user-guess').value;
+            const msg = document.getElementById('game-msg');
+            if (userGuess == secretNumber) {
+                msg.textContent = "🎉 مبروك! خمنت صح!";
+                msg.style.color = "#10b981";
+                secretNumber = Math.floor(Math.random() * 10) + 1;
+            } else if (userGuess > secretNumber) {
+                msg.textContent = "كبير أوي! جرب رقم أصغر";
+                msg.style.color = "#ef4444";
+            } else {
+                msg.textContent = "صغير أوي! جرب رقم أكبر";
+                msg.style.color = "#f59e0b";
+            }
+        }
+    </script>
+</body>
+</html>
